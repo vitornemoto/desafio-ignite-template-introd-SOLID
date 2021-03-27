@@ -1,0 +1,211 @@
+{
+    "openapi":"3.0.0",
+    "info":{
+        "title": "User Manager Documentation",
+        "description": "This is an API Rent",
+        "version": "1.0.0",
+        "contact":{
+            "email":"vitor_nemoto@gmail.com"
+        }
+    },
+   "paths" :{
+       "/users":{
+           "post":{
+                "tags":["User"],
+                "summary":"Create a user",
+                "description": "Create a new user",
+                "requestBody":{
+                    "content":{
+                        "application/json": {
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "name":{
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"     
+                                    }
+                                },
+                                "example":{
+                                    "name":"User Name Sample",
+                                    "email": "vitor@gmail.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description":"Created"
+                    },
+                    "400":{
+                        "description": "User already exists"
+                    }
+                }
+
+           },
+           "get":{
+                "tags":["User"],
+                "summary":"List all users (only admin users can be list)",
+                "description":"List all users (only admin users can be list)",
+                "parameters":[
+                    {
+                        "name":"user_id",
+                        "in": "header",
+                        "required": "true",
+                        "schema":{
+                            "type":"string",
+                            "format":"uuid"
+                        },
+                        "description": "Admin User ID"
+                    }   
+                ],               
+
+                "responses":{
+                    "200":{
+                        "description": "Success",
+                        "content": {
+                            "application/json":{
+                                "type": "array",
+                                "items":{
+                                    "type": "object",
+                                    "properties":{
+                                        "id":{
+                                            "type":"string"
+                                        },
+                                        "admin":{
+                                            "type":"boolean"
+                                        },
+                                        "name":{
+                                            "type":"string"
+                                        },
+                                        "email":{
+                                            "type":"string"
+                                        },
+                                        "created_at":{
+                                            "type":"Date"
+                                        },
+                                        "updated_at":{
+                                            "type":"Date"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                       "description":"User is not a user admin."     
+                    }
+                }
+           }          
+       },
+       "/users/{id}/admin":{
+          "patch":{
+              "tags":["User"],
+              "summary":"Turn a user admin",
+              "description":"Turn a user admin",
+              "parameters":[
+                  {
+                      "name":"id",
+                      "in":"path",
+                      "required":"true",
+                      "schema":{
+                          "type":"string"
+                      },
+                      "description":"The user ID"
+                  }
+              ],
+              "responses":{
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{
+                            "type": "array",
+                            "items":{
+                                "type": "object",
+                                "properties":{
+                                    "id":{
+                                        "type":"string"
+                                    },
+                                    "admin":{
+                                        "type":"boolean"
+                                    },
+                                    "name":{
+                                        "type":"string"
+                                    },
+                                    "email":{
+                                        "type":"string"
+                                    },
+                                    "created_at":{
+                                        "type":"Date"
+                                    },
+                                    "updated_at":{
+                                        "type":"Date"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "400":{
+                   "description":"User is already an admin user."     
+                }
+            }
+              
+          }
+       },
+       "/users/{id}":{
+           "get":{
+            "tags":["User"],
+            "summary":"List an specific user",
+            "description":"List an specific user",
+            "parameters":[
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required":"true",
+                    "schema":{
+                        "type":"string"
+                    },
+                    "description": "The user ID"
+                }
+            ],
+            "responses":{
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{
+                            "type": "array",
+                            "items":{
+                                "type": "object",
+                                "properties":{
+                                    "id":{
+                                        "type":"string"
+                                    },
+                                    "admin":{
+                                        "type":"boolean"
+                                    },
+                                    "name":{
+                                        "type":"string"
+                                    },
+                                    "email":{
+                                        "type":"string"
+                                    },
+                                    "created_at":{
+                                        "type":"Date"
+                                    },
+                                    "updated_at":{
+                                        "type":"Date"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+           }
+       }
+   }
+}
