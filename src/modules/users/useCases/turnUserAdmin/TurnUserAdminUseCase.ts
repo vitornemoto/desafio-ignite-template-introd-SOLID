@@ -15,8 +15,8 @@ class TurnUserAdminUseCase {
       throw new Error("User not found by user_id.");
     }
 
-    if (!user.admin) {
-      throw new Error("User is not a user admin.");
+    if (user.admin) {
+      throw new Error("User is already an admin user.");
     }
 
     this.usersRepository.turnAdmin(user);
